@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import heroBg from "../assets/pexels-masoodaslami-6546389.avif";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import InteractiveGrid from "../components/InteractiveGrid";
 import PageShell from "../components/PageShell";
+import publicUrl from "../utils/publicUrl";
+
+const HERO_IMAGE = publicUrl("/images/hero.avif");
 
 const hero = {
   hidden: {},
@@ -39,9 +41,12 @@ export default function HomePage() {
   return (
     <PageShell className="bg-black">
       <BackgroundImage
-        src={heroBg}
+        src={HERO_IMAGE}
         overlayClass="bg-black/45 backdrop-blur-sm"
         rotate={90}
+        priority
+        width={1920}
+        height={1280}
       />
       <InteractiveGrid excludeRefs={[headerRef, heroRef]} />
 

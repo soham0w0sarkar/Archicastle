@@ -5,6 +5,8 @@ export default function Logo({ className = "" }) {
     <img
       src={logo}
       alt="ArchiCastle"
+      width={3128}
+      height={2515}
       className={`h-9 w-auto origin-left translate-y-[7px] scale-[3.25] sm:scale-[3.75] md:scale-[4.25] ${className}`}
     />
   );

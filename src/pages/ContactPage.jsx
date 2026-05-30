@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import contactBg from "../assets/image-1.avif";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import PageShell from "../components/PageShell";
+import publicUrl from "../utils/publicUrl";
+
+const CONTACT_IMAGE = publicUrl("/images/contact.avif");
 
 const FIELDS = ["name", "email", "phone", "message"];
 
@@ -305,7 +307,7 @@ export default function ContactPage() {
 
   return (
     <PageShell className="bg-black">
-      <BackgroundImage src={contactBg} overlayClass="bg-black/55" />
+      <BackgroundImage src={CONTACT_IMAGE} overlayClass="bg-black/55" />
       <div
         className="absolute inset-0 z-[1] bg-black/20 backdrop-blur-[2px]"
         aria-hidden

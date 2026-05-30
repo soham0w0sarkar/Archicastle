@@ -11,6 +11,26 @@ const rootDir = fileURLToPath(new URL(".", import.meta.url));
 // https://vite.dev/config/
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || "/",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules/framer-motion")) {
+            return "motion";
+          }
+          if (
+            id.includes("node_modules/react-dom") ||
+            id.includes("node_modules/react/")
+          ) {
+            return "react-vendor";
+          }
+          if (id.includes("node_modules/react-router")) {
+            return "router";
+          }
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
