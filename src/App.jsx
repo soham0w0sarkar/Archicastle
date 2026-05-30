@@ -4,6 +4,7 @@ import ContactPage from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ServicesLayout from "./pages/ServicesLayout";
 import ServicesPage from "./pages/ServicesPage";
 
 export default function App() {
@@ -11,12 +12,14 @@ export default function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || undefined}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route
-          path="/services/modelling"
-          element={<Navigate to="/services/bim" replace />}
-        />
-        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/services" element={<ServicesLayout />}>
+          <Route index element={<ServicesPage />} />
+          <Route
+            path="modelling"
+            element={<Navigate to="/services/bim" replace />}
+          />
+          <Route path=":slug" element={<ServiceDetailPage />} />
+        </Route>
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFoundPage />} />

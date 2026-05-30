@@ -1,12 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import BackToHome from "../components/BackToHome";
-import BackgroundVideo from "../components/BackgroundVideo";
-import Header from "../components/Header";
-import PageShell from "../components/PageShell";
 import ServiceIcon from "../components/ServiceIcon";
 import { servicesList } from "../data/services";
-import { SERVICES_VIDEO } from "../data/servicesVideo";
 
 const panel = {
   hidden: {},
@@ -29,75 +25,64 @@ const cardClass =
 
 export default function ServicesPage() {
   return (
-    <PageShell className="bg-black">
-      <BackgroundVideo
-        mp4={SERVICES_VIDEO.mp4}
-        webm={SERVICES_VIDEO.webm}
-        poster={SERVICES_VIDEO.poster}
-        overlayClass="bg-black/40 backdrop-blur-sm"
-        videoClass=""
-        playbackRate={SERVICES_VIDEO.playbackRate}
-      />
-      <Header />
-      <main className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-3 pt-28 sm:px-6 sm:pb-4 sm:pt-32 md:px-10 md:pt-28 lg:px-12">
+    <main className="relative z-10 flex min-h-0 flex-1 flex-col px-4 pb-3 pt-28 sm:px-6 sm:pb-4 sm:pt-32 md:px-10 md:pt-28 lg:px-12">
+      <motion.div
+        variants={item}
+        initial="hidden"
+        animate="visible"
+        className="mt-2 shrink-0 sm:mt-3"
+      >
+        <BackToHome />
+      </motion.div>
+
+      <motion.div
+        variants={panel}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-1 flex-col items-center justify-start pt-2 sm:pt-4"
+      >
+        <motion.p
+          variants={item}
+          className="text-[10px] tracking-[0.35em] text-white/50 uppercase"
+        >
+          What we offer
+        </motion.p>
+
+        <motion.h1
+          variants={item}
+          className="mt-2 font-serif text-3xl text-white uppercase italic sm:text-4xl md:text-5xl"
+        >
+          Services
+        </motion.h1>
+
+        <motion.div variants={item} className="mt-4 overflow-hidden sm:mt-5">
+          <motion.div
+            className="h-px w-24 bg-accent"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{
+              duration: 0.75,
+              delay: 0.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{ originX: 0.5 }}
+          />
+        </motion.div>
+
         <motion.div
           variants={item}
-          initial="hidden"
-          animate="visible"
-          className="mt-2 shrink-0 sm:mt-3"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-36 gap-y-6 sm:mt-8 sm:gap-x-10 lg:gap-x-36"
         >
-          <BackToHome />
+          {servicesList.map(({ slug, label }) => (
+            <Link key={slug} to={`/services/${slug}`} className={cardClass}>
+              <ServiceIcon slug={slug} />
+              <p className="text-center text-sm tracking-[0.2em] text-white uppercase">
+                {label}
+              </p>
+            </Link>
+          ))}
         </motion.div>
-
-        <motion.div
-          variants={panel}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-1 flex-col items-center justify-start pt-2 sm:pt-4"
-        >
-          <motion.p
-            variants={item}
-            className="text-[10px] tracking-[0.35em] text-white/50 uppercase"
-          >
-            What we offer
-          </motion.p>
-
-          <motion.h1
-            variants={item}
-            className="mt-2 font-serif text-3xl text-white uppercase italic sm:text-4xl md:text-5xl"
-          >
-            Services
-          </motion.h1>
-
-          <motion.div variants={item} className="mt-4 overflow-hidden sm:mt-5">
-            <motion.div
-              className="h-px w-24 bg-accent"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{
-                duration: 0.75,
-                delay: 0.4,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{ originX: 0.5 }}
-            />
-          </motion.div>
-
-          <motion.div
-            variants={item}
-            className="mt-6 flex flex-wrap items-center justify-center gap-x-36 gap-y-6 sm:mt-8 sm:gap-x-10 lg:gap-x-36"
-          >
-            {servicesList.map(({ slug, label }) => (
-              <Link key={slug} to={`/services/${slug}`} className={cardClass}>
-                <ServiceIcon slug={slug} />
-                <p className="text-center text-sm tracking-[0.2em] text-white uppercase">
-                  {label}
-                </p>
-              </Link>
-            ))}
-          </motion.div>
-        </motion.div>
-      </main>
-    </PageShell>
+      </motion.div>
+    </main>
   );
 }
