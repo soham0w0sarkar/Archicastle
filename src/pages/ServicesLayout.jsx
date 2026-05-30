@@ -20,6 +20,7 @@ export default function ServicesLayout() {
         overlayClass="bg-black/40 backdrop-blur-sm"
         videoClass=""
         playbackRate={SERVICES_VIDEO.playbackRate}
+        priority
       />
 
       {isDetail && (

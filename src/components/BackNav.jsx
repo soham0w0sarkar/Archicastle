@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { prefetchBackgroundForRoute } from "../data/backgroundAssets";
 
 export default function BackNav({
   to,
@@ -10,6 +11,8 @@ export default function BackNav({
     <Link
       to={to}
       className={`group relative inline-flex items-center gap-3 no-underline ${className}`}
+      onMouseEnter={() => prefetchBackgroundForRoute(to)}
+      onFocus={() => prefetchBackgroundForRoute(to)}
     >
       <span className="relative flex h-9 w-9 shrink-0 items-center justify-center border border-white/25 text-accent transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white sm:h-10 sm:w-10">
         <span

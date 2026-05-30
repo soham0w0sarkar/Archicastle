@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { prefetchBackgroundForRoute } from "../data/backgroundAssets";
 import { getEnquiryMessage } from "../data/services";
 
 export default function EnquireButton({ serviceName, className = "" }) {
@@ -7,6 +8,8 @@ export default function EnquireButton({ serviceName, className = "" }) {
       to="/contact"
       state={{ message: getEnquiryMessage(serviceName) }}
       className={`group relative inline-flex items-center gap-3 no-underline ${className}`}
+      onMouseEnter={() => prefetchBackgroundForRoute("/contact")}
+      onFocus={() => prefetchBackgroundForRoute("/contact")}
     >
       <span className="flex flex-col items-start gap-1">
         <span className="text-[9px] tracking-[0.35em] text-white/40 uppercase">

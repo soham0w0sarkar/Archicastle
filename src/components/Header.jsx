@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { prefetchBackgroundForRoute } from "../data/backgroundAssets";
 import Logo from "./Logo";
 
 const linkClass = ({ isActive }) =>
@@ -53,7 +54,14 @@ export default function Header({ variant = "overlay" }) {
 
         <nav className="hidden items-center gap-1 md:flex md:gap-2 lg:gap-4">
           {navLinks.map(({ to, label, end }) => (
-            <NavLink key={to} to={to} end={end} className={linkClass}>
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={linkClass}
+              onMouseEnter={() => prefetchBackgroundForRoute(to)}
+              onFocus={() => prefetchBackgroundForRoute(to)}
+            >
               {label}
             </NavLink>
           ))}
@@ -97,6 +105,8 @@ export default function Header({ variant = "overlay" }) {
             end={end}
             className={linkClass}
             onClick={closeMenu}
+            onMouseEnter={() => prefetchBackgroundForRoute(to)}
+            onFocus={() => prefetchBackgroundForRoute(to)}
           >
             {label}
           </NavLink>

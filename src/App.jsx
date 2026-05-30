@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import BackgroundPrefetcher from "./components/BackgroundPrefetcher";
 import HomePage from "./pages/HomePage";
 
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -16,6 +17,7 @@ function PageLoader() {
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || undefined}>
+      <BackgroundPrefetcher />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />

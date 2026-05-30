@@ -5,9 +5,9 @@ import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import InteractiveGrid from "../components/InteractiveGrid";
 import PageShell from "../components/PageShell";
-import publicUrl from "../utils/publicUrl";
+import { PAGE_BACKGROUNDS, prefetchBackgroundForRoute } from "../data/backgroundAssets";
 
-const HERO_IMAGE = publicUrl("/images/hero.avif");
+const HERO_IMAGE = PAGE_BACKGROUNDS.home;
 
 const hero = {
   hidden: {},
@@ -140,6 +140,8 @@ export default function HomePage() {
               <Link
                 to="/services"
                 className="group relative inline-flex items-center gap-2 overflow-hidden border border-white/80 px-5 py-2 text-[10px] tracking-[0.3em] text-white uppercase no-underline sm:px-7 sm:py-2 sm:text-xs"
+                onMouseEnter={() => prefetchBackgroundForRoute("/services")}
+                onFocus={() => prefetchBackgroundForRoute("/services")}
               >
                 <span
                   className="absolute inset-0 origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100"

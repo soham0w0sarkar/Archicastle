@@ -4,14 +4,7 @@ import BlueprintCorners from "../components/BlueprintCorners";
 import BackgroundVideo from "../components/BackgroundVideo";
 import Header from "../components/Header";
 import PageShell from "../components/PageShell";
-
-import publicUrl from "../utils/publicUrl";
-
-const ABOUT_VIDEO = {
-  mp4: publicUrl("/videos/about/hero.mp4"),
-  webm: publicUrl("/videos/about/hero.webm"),
-  poster: publicUrl("/videos/about/poster.webp"),
-};
+import { PAGE_BACKGROUNDS, ABOUT_VIDEO, prefetchBackgroundForRoute } from "../data/backgroundAssets";
 
 const paragraphs = [
   "ARCHI CASTLE is a team of Architects, engineers and BIM professionals. We are BIM service and training provider.",
@@ -47,6 +40,7 @@ export default function AboutPage() {
         overlayClass="bg-black/30"
         videoClass="grayscale"
         className="z-0"
+        priority
       />
       <Header />
 
@@ -129,6 +123,8 @@ export default function AboutPage() {
               <Link
                 to="/services"
                 className="group inline-flex items-center gap-3 bg-accent px-6 py-2.5 text-[10px] font-semibold tracking-[0.2em] text-white uppercase no-underline transition-colors hover:bg-accent-hover sm:px-8 sm:text-xs"
+                onMouseEnter={() => prefetchBackgroundForRoute("/services")}
+                onFocus={() => prefetchBackgroundForRoute("/services")}
               >
                 Read more
                 <span className="transition-transform group-hover:translate-x-1">
