@@ -5,10 +5,12 @@ import BackgroundVideo from "../components/BackgroundVideo";
 import Header from "../components/Header";
 import PageShell from "../components/PageShell";
 
+import publicUrl from "../utils/publicUrl";
+
 const ABOUT_VIDEO = {
-  mp4: "/videos/about/hero.mp4",
-  webm: "/videos/about/hero.webm",
-  poster: "/videos/about/poster.webp",
+  mp4: publicUrl("/videos/about/hero.mp4"),
+  webm: publicUrl("/videos/about/hero.webm"),
+  poster: publicUrl("/videos/about/poster.webp"),
 };
 
 const paragraphs = [
