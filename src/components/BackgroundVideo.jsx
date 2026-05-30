@@ -1,5 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 
+function deferNonBlocking(callback) {
+  let idleId;
+  let timeoutId;
+
+  const raf = requestAnimationFrame(() => {
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(callback, { timeout: 2500 });
+    } else {
+      timeoutId = window.setTimeout(callback, 400);
+    }
+  });
+
+  return () => {
+    cancelAnimationFrame(raf);
+    if (idleId !== undefined) {
+      window.cancelIdleCallback(idleId);
+    }
+    if (timeoutId !== undefined) {
+      window.clearTimeout(timeoutId);
+    }
+  };
+}
+
 export default function BackgroundVideo({
   mp4,
   webm,
@@ -12,9 +35,10 @@ export default function BackgroundVideo({
 }) {
   const videoRef = useRef(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [loadVideo, setLoadVideo] = useState(false);
 
   const videoClasses = [
-    "absolute left-1/2 top-1/2 h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover transition-opacity duration-500",
+    "pointer-events-none absolute left-1/2 top-1/2 h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover transition-opacity duration-700",
     videoClass,
     videoReady ? "opacity-100" : "opacity-0",
   ]
@@ -22,7 +46,7 @@ export default function BackgroundVideo({
     .join(" ");
 
   const posterClasses = [
-    "absolute left-1/2 top-1/2 h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover transition-opacity duration-500",
+    "pointer-events-none absolute left-1/2 top-1/2 h-auto w-auto min-h-full min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 object-cover transition-opacity duration-700",
     videoClass,
     videoReady ? "opacity-0" : "opacity-100",
   ]
@@ -31,18 +55,25 @@ export default function BackgroundVideo({
 
   useEffect(() => {
     setVideoReady(false);
+    setLoadVideo(false);
+
+    return deferNonBlocking(() => setLoadVideo(true));
   }, [mp4, webm]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !loadVideo) return;
+
+    let cancelled = false;
 
     const applyRate = () => {
       video.playbackRate = playbackRate;
     };
 
     const handleReady = () => {
-      setVideoReady(true);
+      if (!cancelled) {
+        setVideoReady(true);
+      }
     };
 
     applyRate();
@@ -50,16 +81,21 @@ export default function BackgroundVideo({
     video.addEventListener("canplay", handleReady);
     video.addEventListener("playing", handleReady);
 
+    video.load();
+    video.play().catch(() => {});
+
     if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
       handleReady();
     }
 
     return () => {
+      cancelled = true;
       video.removeEventListener("loadedmetadata", applyRate);
       video.removeEventListener("canplay", handleReady);
       video.removeEventListener("playing", handleReady);
+      video.pause();
     };
-  }, [playbackRate, mp4, webm]);
+  }, [loadVideo, playbackRate, mp4, webm]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
@@ -71,21 +107,19 @@ export default function BackgroundVideo({
           className={posterClasses}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
-          decoding={priority ? "sync" : "async"}
+          decoding="async"
         />
       )}
       <video
         ref={videoRef}
-        autoPlay
         muted
         loop
         playsInline
-        preload={priority ? "auto" : "metadata"}
-        poster={poster}
+        preload="none"
         className={videoClasses}
       >
-        {webm && <source src={webm} type="video/webm" />}
-        <source src={mp4} type="video/mp4" />
+        {loadVideo && webm && <source src={webm} type="video/webm" />}
+        {loadVideo && <source src={mp4} type="video/mp4" />}
       </video>
       <div className={`absolute inset-0 ${overlayClass}`} aria-hidden />
     </div>
