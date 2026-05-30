@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AnimatedBlueprintGrid from "../components/AnimatedBlueprintGrid";
 import BackToServices from "../components/BackToServices";
 import BackgroundVideo from "../components/BackgroundVideo";
@@ -9,6 +9,7 @@ import PageShell from "../components/PageShell";
 import ServiceIcon from "../components/ServiceIcon";
 import { getServiceBySlug } from "../data/services";
 import { SERVICES_VIDEO } from "../data/servicesVideo";
+import NotFoundPage from "./NotFoundPage";
 
 const panel = {
   hidden: {},
@@ -31,7 +32,7 @@ export default function ServiceDetailPage() {
   const service = getServiceBySlug(slug);
 
   if (!service) {
-    return <Navigate to="/services" replace />;
+    return <NotFoundPage />;
   }
 
   return (
