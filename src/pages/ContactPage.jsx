@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { sendContactEmail } from "../api/contact";
 import BackgroundImage from "../components/BackgroundImage";
 import Header from "../components/Header";
 import PageShell from "../components/PageShell";
@@ -64,7 +65,8 @@ function ContactForm({ prefilledMessage = "" }) {
     message: prefilledMessage,
   });
   const [currentField, setCurrentField] = useState("name");
-  const [isSending, setIsSending] = useState(false);
+  const [submitState, setSubmitState] = useState("idle");
+  const [submitError, setSubmitError] = useState("");
 
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
@@ -112,16 +114,40 @@ function ContactForm({ prefilledMessage = "" }) {
     }
   };
 
-  const submitForm = () => {
-    if (isSending) return;
-    setIsSending(true);
+  const submitForm = async () => {
+    if (submitState === "sending") return;
 
-    window.setTimeout(() => {
+    const { name, email, phone, message } = formData;
+    if (!name.trim() || !email.trim() || !message.trim()) return;
+
+    setSubmitState("sending");
+    setSubmitError("");
+
+    try {
+      await sendContactEmail({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        message: message.trim(),
+      });
+
       setFormData({ name: "", email: "", phone: "", message: "" });
       setCurrentField("name");
-      setIsSending(false);
+      setSubmitState("success");
       focusField("name");
-    }, 2000);
+    } catch (error) {
+      setSubmitState("error");
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again.",
+      );
+    }
+  };
+
+  const closeOverlay = () => {
+    setSubmitState("idle");
+    setSubmitError("");
   };
 
   const handleFormSubmit = (e) => {
@@ -257,40 +283,78 @@ function ContactForm({ prefilledMessage = "" }) {
       </motion.div>
 
       <AnimatePresence>
-        {isSending && (
+        {submitState !== "idle" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 flex items-center justify-center bg-black/75 backdrop-blur-[2px]"
+            onClick={submitState !== "sending" ? closeOverlay : undefined}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="text-center"
+              className="max-w-sm px-6 text-center"
+              onClick={(e) => e.stopPropagation()}
             >
-              <motion.div
-                initial={{ y: 0 }}
-                animate={{ y: -12 }}
-                transition={{
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  duration: 0.9,
-                }}
-                className="mb-4 text-accent"
-              >
-                <MailIcon />
-              </motion.div>
-              <motion.p
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 }}
-                className="font-serif text-sm text-white italic sm:text-base"
-              >
-                Sending your{" "}
-                <span className="text-accent not-italic">message</span>...
-              </motion.p>
+              {submitState === "sending" && (
+                <>
+                  <motion.div
+                    initial={{ y: 0 }}
+                    animate={{ y: -12 }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      duration: 0.9,
+                    }}
+                    className="mb-4 text-accent"
+                  >
+                    <MailIcon />
+                  </motion.div>
+                  <motion.p
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                    className="font-serif text-sm text-white italic sm:text-base"
+                  >
+                    Sending your{" "}
+                    <span className="text-accent not-italic">message</span>...
+                  </motion.p>
+                </>
+              )}
+
+              {submitState === "success" && (
+                <>
+                  <p className="font-serif text-2xl text-accent italic">Sent</p>
+                  <p className="mt-3 text-sm text-white/80">
+                    Thank you — we&apos;ll be in touch soon.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={closeOverlay}
+                    className="mt-6 border border-white/30 px-5 py-2 text-[10px] tracking-[0.25em] text-white uppercase transition-colors hover:border-accent"
+                  >
+                    Close
+                  </button>
+                </>
+              )}
+
+              {submitState === "error" && (
+                <>
+                  <p className="font-serif text-2xl text-accent italic">
+                    Couldn&apos;t send
+                  </p>
+                  <p className="mt-3 text-sm text-white/80">{submitError}</p>
+                  <button
+                    type="button"
+                    onClick={closeOverlay}
+                    className="mt-6 border border-white/30 px-5 py-2 text-[10px] tracking-[0.25em] text-white uppercase transition-colors hover:border-accent"
+                  >
+                    Try again
+                  </button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

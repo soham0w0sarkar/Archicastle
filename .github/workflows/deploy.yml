@@ -32,6 +32,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_WEB3FORMS_ACCESS_KEY: 40e722b2-14a4-4d1d-833e-f759376b6264
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
