@@ -134,7 +134,7 @@ export default function InteractiveGrid({ excludeRefs = [] }) {
   return (
     <div
       ref={containerRef}
-      className="pointer-events-none absolute inset-0 z-[5] overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-5 overflow-hidden"
       aria-hidden
     >
       <div

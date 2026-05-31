@@ -313,7 +313,7 @@ export default function ContactPage() {
         height={1280}
       />
       <div
-        className="absolute inset-0 z-[1] bg-black/20 backdrop-blur-[2px]"
+        className="absolute inset-0 z-1 bg-black/20 backdrop-blur-[2px]"
         aria-hidden
       />
       <Header />

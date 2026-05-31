@@ -11,7 +11,7 @@ export default function ServicesLayout() {
   return (
     <PageShell
       className="bg-black"
-      sectionClassName={isDetail ? "page-section-fit" : ""}
+      sectionClassName="h-dvh max-h-dvh overflow-hidden"
     >
       <BackgroundVideo
         mp4={SERVICES_VIDEO.mp4}

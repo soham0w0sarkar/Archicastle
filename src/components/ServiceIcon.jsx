@@ -11,17 +11,17 @@ const serviceIcons = {
   documentation: DocumentAttachmentIcon,
 };
 
-export default function ServiceIcon({ slug }) {
+export default function ServiceIcon({ slug, size = 56, className = "" }) {
   const icon = serviceIcons[slug];
   if (!icon) return null;
 
   return (
     <HugeiconsIcon
       icon={icon}
-      size={56}
+      size={size}
       color="currentColor"
       strokeWidth={1.5}
-      className="text-white"
+      className={`shrink-0 text-white ${className}`}
     />
   );
 }
