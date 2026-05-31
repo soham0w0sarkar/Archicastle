@@ -3,11 +3,19 @@ import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { sendContactEmail } from "../api/contact";
 import BackgroundImage from "../components/BackgroundImage";
+import FormStepButton from "../components/FormStepButton";
 import Header from "../components/Header";
 import PageShell from "../components/PageShell";
 import { PAGE_BACKGROUNDS } from "../data/backgroundAssets";
 
 const FIELDS = ["name", "email", "phone", "message"];
+
+const FIELD_LABELS = {
+  name: "Name",
+  email: "Email",
+  phone: "Contact",
+  message: "Message",
+};
 
 const panel = {
   hidden: {},
@@ -98,6 +106,36 @@ function ContactForm({ prefilledMessage = "" }) {
     }
   };
 
+  const goBack = () => {
+    const index = FIELDS.indexOf(currentField);
+    if (index > 0) {
+      const prev = FIELDS[index - 1];
+      setCurrentField(prev);
+      focusField(prev);
+    }
+  };
+
+  const canAdvanceFrom = (field) => {
+    if (field === "phone") return true;
+    return formData[field].trim().length > 0;
+  };
+
+  const handleMobileNext = () => {
+    if (currentField === "message") {
+      submitForm();
+      return;
+    }
+
+    if (canAdvanceFrom(currentField)) {
+      advanceFrom(currentField);
+    }
+  };
+
+  const currentFieldIndex = FIELDS.indexOf(currentField);
+  const isLastField = currentField === "message";
+  const previousFieldLabel =
+    currentFieldIndex > 0 ? FIELD_LABELS[FIELDS[currentFieldIndex - 1]] : "Back";
+
   const handleKeyDown = (e, field) => {
     if (e.key !== "Enter") return;
     if (field === "message" && e.shiftKey) return;
@@ -109,7 +147,7 @@ function ContactForm({ prefilledMessage = "" }) {
       return;
     }
 
-    if (formData[field].trim()) {
+    if (formData[field].trim() || field === "phone") {
       advanceFrom(field);
     }
   };
@@ -160,7 +198,7 @@ function ContactForm({ prefilledMessage = "" }) {
       type: "text",
       name: "name",
       placeholder: (active) =>
-        active ? "Type your name and press Enter" : "Name",
+        active ? "Type your name" : "Name",
       disabled: currentField !== "name" && formData.name !== "",
     },
     {
@@ -168,7 +206,7 @@ function ContactForm({ prefilledMessage = "" }) {
       type: "email",
       name: "email",
       placeholder: (active) =>
-        active ? "Type your email and press Enter" : "Email",
+        active ? "Type your email" : "Email",
       disabled: currentField !== "email",
     },
     {
@@ -176,7 +214,7 @@ function ContactForm({ prefilledMessage = "" }) {
       type: "tel",
       name: "phone",
       placeholder: (active) =>
-        active ? "Type your contact no. and press Enter" : "Contact no.",
+        active ? "Type your contact no." : "Contact no.",
       disabled: currentField !== "phone",
     },
     {
@@ -184,9 +222,7 @@ function ContactForm({ prefilledMessage = "" }) {
       type: "textarea",
       name: "message",
       placeholder: (active) =>
-        active
-          ? "Type your message and press Enter to send"
-          : "Type your message here...",
+        active ? "Type your message" : "Type your message here...",
       disabled: currentField !== "message",
     },
   ];
@@ -279,6 +315,28 @@ function ContactForm({ prefilledMessage = "" }) {
               ) : null,
             )}
           </AnimatePresence>
+
+          <div className="mt-6 flex items-center justify-between gap-4 md:hidden">
+            {currentFieldIndex > 0 ? (
+              <FormStepButton
+                direction="back"
+                eyebrow="Previous"
+                label={previousFieldLabel}
+                onClick={goBack}
+              />
+            ) : (
+              <span aria-hidden className="w-9" />
+            )}
+
+            <FormStepButton
+              direction="next"
+              eyebrow={isLastField ? "Submit" : "Continue"}
+              label={isLastField ? "Send" : "Next"}
+              onClick={handleMobileNext}
+              disabled={!canAdvanceFrom(currentField)}
+              className="ml-auto"
+            />
+          </div>
         </form>
       </motion.div>
 
