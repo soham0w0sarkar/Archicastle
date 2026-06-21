@@ -9,26 +9,32 @@ export const TRAINING_INTRO_VIDEO = {
 };
 
 export const TRAINING_INTRO = {
-  titleMain: "Welcome to the",
-  titleAccent: "training",
+  titleMain: "Become a Construction Risk Analyst",
+  titleAccent: "with BIM",
   paragraphs: [
-    "This program is designed for architects and engineers who want to move from basics to confident BIM delivery.",
-    "Sessions combine live instruction, hands-on exercises, and real-world project scenarios so you learn by doing.",
-    "Whether you are starting out or levelling up, you will build skills that translate directly to professional practice.",
+    "Most people learn BIM and stop at modelling - building elements in Revit, producing sheets, ticking off deliverables. But that's only the surface.",
+    "BIM is so much more than modelling. Used right, it's how you understand the technical realities of construction before they become problems on site - clashes, clearances, coordination gaps, the things that turn into delays and change orders.",
+    "This program takes you deeper. You won't just learn to model — you'll learn to read a building the way a risk analyst does, understand what BIM data is actually telling you, and use it to catch problems early.",
   ],
+  closing:
+    "Stop being just a BIM modeller. Start your journey to becoming a construction risk analyst.",
 };
 
 export const TRAINER = {
   name: "Soumya",
   surname: "Sarkar",
-  role: "Architect · BIM Professional · Educator",
+  role: "BIM Lead · Autodesk Certified Professional · Educator",
   image: publicUrl("/images/training/trainer.png"),
-  bio: "Soumya brings years of hands-on BIM experience across architecture and engineering projects. He has trained professionals and students to adopt modern AEC workflows with clarity, structure, and confidence.",
+  paragraphs: [
+    "I believe the true value of BIM lies beyond modelling.",
+    "Having worked on BIM projects across the UAE, I've seen how BIM can be used to identify risks, improve coordination, and prevent costly site issues before construction begins.",
+    "My goal is to help you develop the mindset of a construction risk analyst—not just a BIM modeller.",
+  ],
   quote:
-    "My goal is simple — to help you think like a professional, work with industry-standard tools, and deliver BIM with confidence.",
+    "Don't just learn how to model a building. Learn how to read one.",
   stats: [
-    { value: "1000+", label: "Students trained" },
-    { value: "Industry", label: "Standard workflows" },
+    { value: "1000+", label: "Professionals Trained" },
+    { value: "Real-World", label: "BIM Experience" },
   ],
 };
 
