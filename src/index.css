@@ -26,7 +26,7 @@
     @apply h-dvh max-h-dvh overflow-hidden;
   }
 
-  @media (max-width: 1023px) {
+  @media (max-width: 767px) {
     .page-section-fit {
       @apply h-auto max-h-none overflow-visible;
     }

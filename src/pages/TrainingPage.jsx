@@ -41,8 +41,9 @@ const panelClass =
   "relative border border-white/15 bg-black/55 backdrop-blur-[3px]";
 const introPanelClass =
   "relative overflow-hidden rounded-lg border border-white/15 bg-black/50 backdrop-blur-sm";
-const cardHeight = "lg:h-[min(46vh,380px)]";
-const section2CardHeight = "lg:h-[min(60vh,500px)]";
+const pageMax = "mx-auto w-full max-w-[1600px]";
+const cardHeight = "md:h-[min(50vh,420px)]";
+const section2CardHeight = "md:h-[min(60vh,500px)]";
 
 function SectionEyebrow({ children }) {
   return (
@@ -110,7 +111,7 @@ function ScrollNavHint({ targetRef, label, direction = "down", className = "" })
           block: "start",
         })
       }
-      className={`group mx-auto hidden shrink-0 cursor-pointer items-center gap-3 border-0 bg-transparent p-0 lg:flex ${className}`}
+      className={`group mx-auto hidden shrink-0 cursor-pointer items-center gap-3 border-0 bg-transparent p-0 md:flex ${className}`}
       aria-label={label}
     >
       <span className="text-[10px] tracking-[0.3em] text-white/30 uppercase transition-colors duration-300 group-hover:text-white/45">
@@ -164,37 +165,37 @@ export default function TrainingPage() {
 
       <Header />
 
-      <main className="relative z-10 lg:h-full lg:overflow-y-auto lg:scroll-smooth lg:snap-y lg:snap-mandatory">
+      <main className="relative z-10 md:h-full md:overflow-y-auto md:scroll-smooth md:snap-y md:snap-mandatory">
         {/* Section 1 */}
         <section
           ref={section1Ref}
-          className={`flex w-full flex-col pb-6 pt-[5.5rem] sm:pb-8 sm:pt-28 lg:min-h-dvh lg:snap-start lg:snap-always lg:justify-between lg:pb-5 lg:pt-24 ${pageX}`}
+          className={`flex w-full flex-col pb-6 pt-[5.5rem] sm:pb-8 sm:pt-28 md:min-h-dvh md:snap-start md:snap-always md:pb-4 md:pt-24 ${pageX}`}
         >
           <motion.div
             variants={panel}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.08 }}
-            className="flex w-full flex-col gap-2 sm:gap-3 lg:gap-4 lg:pt-1"
+            className={`${pageMax} flex flex-1 flex-col justify-center gap-2 sm:gap-3 md:gap-4 md:py-3 lg:py-5`}
           >
             <motion.div
               variants={item}
-              className="mx-auto w-full max-w-3xl text-center lg:max-w-4xl"
+              className="mx-auto w-full max-w-3xl text-center xl:max-w-4xl"
             >
               <SectionEyebrow>Training introduction</SectionEyebrow>
               <h2 className="mt-2 font-serif text-[1.75rem] leading-tight italic sm:mt-2.5 sm:text-4xl xl:text-[2.65rem]">
-                <span className="block text-white">{TRAINING_INTRO.titleMain}</span>
-                <span className="block text-accent">{TRAINING_INTRO.titleAccent}</span>
+                <span className="text-white">{TRAINING_INTRO.titleMain} </span>
+                <span className="text-accent">{TRAINING_INTRO.titleAccent}</span>
               </h2>
               <AccentRule centered className="mt-3" />
             </motion.div>
 
             <div
-              className={`mt-3 grid w-full grid-cols-1 gap-3 sm:gap-4 lg:mt-4 lg:grid-cols-12 lg:items-stretch lg:gap-4 xl:gap-5 ${cardHeight}`}
+              className={`mt-3 grid w-full grid-cols-1 gap-3 sm:gap-4 md:mt-4 md:grid-cols-12 md:items-stretch md:gap-4 xl:gap-5 ${cardHeight}`}
             >
               <motion.div
                 variants={item}
-                className="order-1 flex flex-col justify-center lg:order-0 lg:col-span-4"
+                className="order-1 flex flex-col justify-center md:order-0 md:col-span-4"
               >
                 <div className="space-y-3 text-sm leading-relaxed text-white/80 sm:space-y-4 sm:text-[0.9375rem]">
                   {TRAINING_INTRO.paragraphs.map((text) => (
@@ -210,7 +211,7 @@ export default function TrainingPage() {
 
               <motion.div
                 variants={item}
-                className={`${introPanelClass} relative order-2 aspect-video w-full sm:aspect-[16/10] lg:order-0 lg:col-span-6 lg:aspect-auto lg:h-full lg:min-h-0`}
+                className={`${introPanelClass} relative order-2 aspect-video w-full sm:aspect-[16/10] md:order-0 md:col-span-6 md:aspect-auto md:h-full md:min-h-0`}
               >
                 <TrainingIntroVideo
                   googleDriveFileId={TRAINING_INTRO_VIDEO.googleDriveFileId}
@@ -220,7 +221,7 @@ export default function TrainingPage() {
 
               <motion.div
                 variants={item}
-                className={`${introPanelClass} order-3 flex flex-col justify-center p-3 sm:p-4 lg:order-0 lg:col-span-2 lg:p-4`}
+                className={`${introPanelClass} order-3 flex flex-col justify-center p-3 sm:p-4 md:order-0 md:col-span-2 md:p-4`}
               >
                 <h3 className="font-serif text-base leading-snug text-white italic sm:text-lg">
                   Book a{" "}
@@ -248,24 +249,24 @@ export default function TrainingPage() {
             targetRef={section2Ref}
             label="Scroll to continue"
             direction="down"
-            className="mt-8 lg:mt-auto lg:mb-1"
+            className="shrink-0 pb-1 md:pb-2"
           />
         </section>
 
         {/* Section 2 */}
         <section
           ref={section2Ref}
-          className="flex w-full flex-col pb-0 pt-[5.5rem] sm:pt-28 lg:min-h-dvh lg:snap-start lg:snap-always lg:justify-between"
+          className="flex w-full flex-col pb-0 pt-[5.5rem] sm:pt-28 md:min-h-dvh md:snap-start md:snap-always md:justify-between"
         >
           <ScrollNavHint
             targetRef={section1Ref}
             label="Scroll to top"
             direction="up"
-            className="mb-12 shrink-0 lg:mb-4"
+            className={`${pageX} mb-3 shrink-0 md:mb-4`}
           />
 
           <div
-            className={`w-full pb-4 lg:flex lg:min-h-0 lg:flex-1 lg:items-center ${pageX} lg:pb-5`}
+            className={`${pageMax} w-full pb-4 md:flex md:min-h-0 md:flex-1 md:items-center ${pageX} md:pb-5`}
           >
             <motion.div
               variants={panel}
@@ -274,10 +275,10 @@ export default function TrainingPage() {
               viewport={{ once: true, amount: 0.08 }}
               className="w-full"
             >
-              <div className="flex flex-col gap-3 sm:gap-4 lg:grid lg:grid-cols-12 lg:items-stretch lg:gap-5 xl:gap-6">
+              <div className="flex flex-col gap-3 sm:gap-4 md:grid md:grid-cols-12 md:items-stretch md:gap-5 xl:gap-6">
                 <motion.div
                   variants={item}
-                  className={`${panelClass} relative aspect-[5/6] max-h-[52vh] overflow-hidden sm:aspect-[4/5] sm:max-h-[58vh] lg:aspect-auto lg:max-h-none lg:col-span-3 ${section2CardHeight}`}
+                  className={`${panelClass} relative aspect-[5/6] max-h-[52vh] overflow-hidden sm:aspect-[4/5] sm:max-h-[58vh] md:aspect-auto md:max-h-none md:col-span-3 ${section2CardHeight}`}
                 >
                   <BlueprintCorners />
                   <img
@@ -288,7 +289,7 @@ export default function TrainingPage() {
                     width={1024}
                     height={768}
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/40 to-transparent px-4 py-4 lg:hidden">
+                  <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 via-black/40 to-transparent px-4 py-4 md:hidden">
                     <p className="font-serif text-base text-white italic">
                       {TRAINER.name} {TRAINER.surname}
                     </p>
@@ -300,25 +301,25 @@ export default function TrainingPage() {
 
                 <motion.div
                   variants={item}
-                  className={`${panelClass} flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 lg:col-span-5 lg:p-5 ${section2CardHeight}`}
+                  className={`${panelClass} flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:col-span-5 md:p-5 ${section2CardHeight}`}
                 >
                   <BlueprintCorners />
 
                   <div className="shrink-0">
                     <SectionEyebrow>Know your trainer</SectionEyebrow>
-                    <h2 className="mt-1.5 hidden font-serif text-xl text-white uppercase sm:text-2xl lg:block xl:text-3xl">
+                    <h2 className="mt-1.5 hidden font-serif text-xl text-white uppercase sm:text-2xl md:block xl:text-3xl">
                       {TRAINER.name}{" "}
                       <span className="text-accent italic">
                         {TRAINER.surname}
                       </span>
                     </h2>
-                    <p className="mt-1 hidden text-[10px] leading-snug tracking-[0.12em] text-white/55 uppercase lg:block">
+                    <p className="mt-1 hidden text-[10px] leading-snug tracking-[0.12em] text-white/55 uppercase md:block">
                       {TRAINER.role}
                     </p>
-                    <AccentRule className="mt-2 hidden lg:block" />
+                    <AccentRule className="mt-2 hidden md:block" />
                   </div>
 
-                  <div className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5 lg:mt-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
+                  <div className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5 md:mt-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
                     <div className="space-y-2 text-[0.8125rem] leading-snug text-white/80 sm:text-sm sm:leading-normal">
                       {TRAINER.paragraphs.map((text) => (
                         <p key={text.slice(0, 32)}>{text}</p>
@@ -357,7 +358,7 @@ export default function TrainingPage() {
 
                 <motion.div
                   variants={item}
-                  className={`${panelClass} relative min-h-[280px] overflow-hidden sm:min-h-[320px] lg:col-span-4 lg:min-h-0 ${section2CardHeight}`}
+                  className={`${panelClass} relative min-h-[280px] overflow-hidden sm:min-h-[320px] md:col-span-4 md:min-h-0 ${section2CardHeight}`}
                 >
                   <BlueprintCorners />
                   <img

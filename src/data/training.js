@@ -9,8 +9,8 @@ export const TRAINING_INTRO_VIDEO = {
 };
 
 export const TRAINING_INTRO = {
-  titleMain: "Become a Construction Risk Analyst",
-  titleAccent: "with BIM",
+  titleMain: "Become a Construction Risk Analyst,",
+  titleAccent: "\"BIM\"",
   paragraphs: [
     "Most people learn BIM and stop at modelling - building elements in Revit, producing sheets, ticking off deliverables. But that's only the surface.",
     "BIM is so much more than modelling. Used right, it's how you understand the technical realities of construction before they become problems on site - clashes, clearances, coordination gaps, the things that turn into delays and change orders.",
