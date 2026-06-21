@@ -42,6 +42,8 @@ const panelClass =
 const introPanelClass =
   "relative overflow-hidden rounded-lg border border-white/15 bg-black/50 backdrop-blur-sm";
 const pageMax = "mx-auto w-full max-w-[1600px]";
+const introBodyText =
+  "text-sm leading-relaxed text-white/80 sm:text-[0.9375rem]";
 const cardHeight = "md:h-[min(50vh,420px)]";
 const section2CardHeight = "md:h-[min(60vh,500px)]";
 
@@ -197,7 +199,7 @@ export default function TrainingPage() {
                 variants={item}
                 className="order-1 flex flex-col justify-center md:order-0 md:col-span-4"
               >
-                <div className="space-y-3 text-sm leading-relaxed text-white/80 sm:space-y-4 sm:text-[0.9375rem]">
+                <div className={`space-y-3 sm:space-y-4 ${introBodyText}`}>
                   {TRAINING_INTRO.paragraphs.map((text) => (
                     <p key={text.slice(0, 24)}>{text}</p>
                   ))}
@@ -221,18 +223,18 @@ export default function TrainingPage() {
 
               <motion.div
                 variants={item}
-                className={`${introPanelClass} order-3 flex flex-col justify-center p-3 sm:p-4 md:order-0 md:col-span-2 md:p-4`}
+                className={`${introPanelClass} order-3 flex flex-col justify-center p-3 md:order-0 md:col-span-2 md:p-3.5`}
               >
-                <h3 className="font-serif text-base leading-snug text-white italic sm:text-lg">
+                <h3 className="font-serif text-xl leading-tight text-white italic sm:text-2xl xl:text-[1.65rem]">
                   Book a{" "}
                   <span className="text-accent not-italic">Consultation</span>
                 </h3>
                 <AccentRule className="mt-2" />
-                <p className="mt-2.5 text-[11px] leading-snug text-white/70 sm:mt-3">
+                <p className={`mt-2.5 ${introBodyText}`}>
                   Speak with us about your goals, experience level, and the right
                   batch for you.
                 </p>
-                <div className="mt-3 sm:mt-4">
+                <div className="mt-3">
                   <BookCallCtaLink
                     fallbackState={{
                       message: TRAINING_CTA.consultationMessage,
@@ -301,58 +303,56 @@ export default function TrainingPage() {
 
                 <motion.div
                   variants={item}
-                  className={`${panelClass} flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:col-span-5 md:p-5 ${section2CardHeight}`}
+                  className={`${panelClass} relative flex h-full flex-col justify-center overflow-hidden p-5 sm:p-6 md:col-span-5 md:p-5 ${section2CardHeight}`}
                 >
                   <BlueprintCorners />
 
-                  <div className="shrink-0">
+                  <div className="relative flex flex-col justify-center">
                     <SectionEyebrow>Know your trainer</SectionEyebrow>
-                    <h2 className="mt-1.5 hidden font-serif text-xl text-white uppercase sm:text-2xl md:block xl:text-3xl">
+                    <h2 className="mt-2 hidden font-serif text-xl text-white uppercase italic sm:text-2xl md:block xl:text-3xl">
                       {TRAINER.name}{" "}
-                      <span className="text-accent italic">
+                      <span className="text-accent not-italic">
                         {TRAINER.surname}
                       </span>
                     </h2>
                     <p className="mt-1 hidden text-[10px] leading-snug tracking-[0.12em] text-white/55 uppercase md:block">
                       {TRAINER.role}
                     </p>
-                    <AccentRule className="mt-2 hidden md:block" />
-                  </div>
+                    <AccentRule className="mt-3 hidden md:block" />
 
-                  <div className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain pr-0.5 md:mt-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20">
-                    <div className="space-y-2 text-[0.8125rem] leading-snug text-white/80 sm:text-sm sm:leading-normal">
+                    <div className="mt-4 space-y-3 text-sm leading-relaxed text-white/80 sm:text-[0.9375rem]">
                       {TRAINER.paragraphs.map((text) => (
                         <p key={text.slice(0, 32)}>{text}</p>
                       ))}
                     </div>
-                  </div>
 
-                  <div className="mt-3 shrink-0 border-t border-white/10 pt-3">
-                    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
-                      {TRAINER.stats.map(({ value, label }, index) => (
-                        <div key={label} className="flex items-center gap-2">
-                          <HugeiconsIcon
-                            icon={trainerStatIcons[index]}
-                            size={16}
-                            color="currentColor"
-                            strokeWidth={1.5}
-                            className="shrink-0 text-accent"
-                          />
-                          <div>
-                            <p className="font-serif text-base leading-none text-white italic">
-                              {value}
-                            </p>
-                            <p className="mt-0.5 text-[8px] leading-snug tracking-[0.1em] text-white/50 uppercase">
-                              {label}
-                            </p>
+                    <div className="mt-5 border-t border-white/10 pt-4">
+                      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
+                        {TRAINER.stats.map(({ value, label }, index) => (
+                          <div key={label} className="flex items-center gap-2">
+                            <HugeiconsIcon
+                              icon={trainerStatIcons[index]}
+                              size={16}
+                              color="currentColor"
+                              strokeWidth={1.5}
+                              className="shrink-0 text-accent"
+                            />
+                            <div>
+                              <p className="font-serif text-base leading-none text-white italic">
+                                {value}
+                              </p>
+                              <p className="mt-0.5 text-[8px] leading-snug tracking-[0.1em] text-white/50 uppercase">
+                                {label}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
 
-                    <blockquote className="mt-2.5 text-xs leading-snug text-white/70 italic sm:text-sm">
-                      &ldquo;{TRAINER.quote}&rdquo;
-                    </blockquote>
+                      <blockquote className="mt-3 text-sm leading-relaxed text-white/70 italic">
+                        &ldquo;{TRAINER.quote}&rdquo;
+                      </blockquote>
+                    </div>
                   </div>
                 </motion.div>
 
