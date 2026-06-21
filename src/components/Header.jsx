@@ -43,7 +43,7 @@ export default function Header({ variant = "overlay" }) {
 
   return (
     <header className={barClass}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4 md:px-10">
+      <div className="flex w-full items-center justify-between gap-3 px-3 py-3 sm:px-4 sm:py-3 md:px-5 lg:px-6 xl:px-8">
         <NavLink
           to="/"
           className="relative z-50 flex h-10 shrink-0 items-center overflow-visible no-underline"
