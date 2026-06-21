@@ -35,7 +35,6 @@ jobs:
         env:
           VITE_WEB3FORMS_ACCESS_KEY: 40e722b2-14a4-4d1d-833e-f759376b6264
           VITE_CALENDLY_URL: https://calendly.com/archicastles/bim-consultation-call
-          VITE_BASE_PATH: /Archicastle/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
