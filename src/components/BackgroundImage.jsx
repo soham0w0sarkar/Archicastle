@@ -7,6 +7,7 @@ export default function BackgroundImage({
   overlayClass = "bg-black/45",
   imageClass = "grayscale",
   className = "z-0",
+  fixed = false,
   rotate = 0,
   priority = false,
   width,
@@ -16,8 +17,10 @@ export default function BackgroundImage({
     ? `absolute left-1/2 top-1/2 min-h-[100vw] min-w-[100vh] -translate-x-1/2 -translate-y-1/2 object-cover ${imageClass} ${rotate === 90 ? "rotate-90" : rotate === -90 ? "-rotate-90" : rotate === 180 ? "rotate-180" : ""}`
     : `h-full w-full object-cover ${imageClass}`;
 
+  const positionClass = fixed ? "fixed inset-0" : "absolute inset-0";
+
   return (
-    <div className={`absolute inset-0 overflow-hidden ${className}`}>
+    <div className={`${positionClass} overflow-hidden ${className}`}>
       <img
         src={src}
         alt={alt}

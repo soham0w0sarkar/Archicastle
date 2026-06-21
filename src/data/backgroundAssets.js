@@ -5,6 +5,7 @@ export const PAGE_BACKGROUNDS = {
   about: publicUrl("/videos/about/poster.webp"),
   contact: publicUrl("/images/contact.webp"),
   services: publicUrl("/videos/services/poster.webp"),
+  training: publicUrl("/images/training/background.png"),
 };
 
 export const ABOUT_VIDEO = {
@@ -18,6 +19,7 @@ export const ROUTE_BACKGROUNDS = {
   "/about": PAGE_BACKGROUNDS.about,
   "/contact": PAGE_BACKGROUNDS.contact,
   "/services": PAGE_BACKGROUNDS.services,
+  "/training": PAGE_BACKGROUNDS.training,
 };
 
 const prefetched = new Set();

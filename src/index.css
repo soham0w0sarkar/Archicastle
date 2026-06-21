@@ -26,6 +26,12 @@
     @apply h-dvh max-h-dvh overflow-hidden;
   }
 
+  @media (max-width: 1023px) {
+    .page-section-fit {
+      @apply h-auto max-h-none overflow-visible;
+    }
+  }
+
   .page-content {
     @apply relative z-10 flex flex-1 flex-col px-4 py-16 sm:px-6 sm:py-20 md:px-10 lg:px-12;
   }

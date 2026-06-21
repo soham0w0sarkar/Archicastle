@@ -9,6 +9,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const ServiceDetailPage = lazy(() => import("./pages/ServiceDetailPage"));
 const ServicesLayout = lazy(() => import("./pages/ServicesLayout"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 
 function PageLoader() {
   return <div className="min-h-dvh bg-black" aria-hidden />;
@@ -29,6 +30,7 @@ export default function App() {
             />
             <Route path=":slug" element={<ServiceDetailPage />} />
           </Route>
+          <Route path="/training" element={<TrainingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -4,12 +4,13 @@ export default function PageShell({
   children,
   className = "",
   sectionClassName = "",
+  hideFooter = false,
 }) {
   return (
     <div className={`flex min-h-dvh flex-col ${className}`}>
       <section className={`page-section ${sectionClassName}`.trim()}>
         {children}
-        <Footer />
+        {!hideFooter && <Footer />}
       </section>
     </div>
   );
