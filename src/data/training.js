@@ -5,7 +5,7 @@ export const TRAINING_BACKGROUND = publicUrl("/images/training/background.png");
 export const TRAINING_INTRO_VIDEO = {
   /** Streams from Google Drive — no 900MB file in the repo. Must be shared: anyone with the link. */
   googleDriveFileId: "1HVqeDsqn6GDdQ2ryn7FDdNTgHgWcrjFY",
-  poster: publicUrl("/images/training/background.png"),
+  poster: publicUrl("/images/training/intro-thumbnail.png"),
 };
 
 export const TRAINING_INTRO = {

@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Settings01Icon,
-  UserGroupIcon,
-} from "@hugeicons/core-free-icons";
+import { Settings01Icon, UserGroupIcon } from "@hugeicons/core-free-icons";
 import BackgroundImage from "../components/BackgroundImage";
 import BlueprintCorners from "../components/BlueprintCorners";
 import BookCallCtaLink from "../components/BookCall";
@@ -137,8 +134,12 @@ export default function TrainingPage() {
                 <BlueprintCorners />
                 <SectionEyebrow>Training introduction</SectionEyebrow>
                 <h2 className="mt-2 font-serif text-[1.65rem] leading-tight uppercase italic sm:text-3xl xl:text-4xl">
-                  <span className="text-white">{TRAINING_INTRO.titleMain} </span>
-                  <span className="text-accent">{TRAINING_INTRO.titleAccent}</span>
+                  <span className="text-white">
+                    {TRAINING_INTRO.titleMain}{" "}
+                  </span>
+                  <span className="text-accent">
+                    {TRAINING_INTRO.titleAccent}
+                  </span>
                 </h2>
                 <AccentRule />
                 <div className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
@@ -163,7 +164,6 @@ export default function TrainingPage() {
                 <TrainingIntroVideo
                   googleDriveFileId={TRAINING_INTRO_VIDEO.googleDriveFileId}
                   poster={TRAINING_INTRO_VIDEO.poster}
-                  autoPlay
                 />
               </motion.div>
 
@@ -178,12 +178,14 @@ export default function TrainingPage() {
                 </h3>
                 <AccentRule />
                 <p className="mt-4 text-sm leading-relaxed text-white/70 sm:mt-5">
-                  Speak with us about your goals, experience level, and the right
-                  batch for you.
+                  Speak with us about your goals, experience level, and the
+                  right batch for you.
                 </p>
                 <div className="mt-5 sm:mt-6">
                   <BookCallCtaLink
-                    fallbackState={{ message: TRAINING_CTA.consultationMessage }}
+                    fallbackState={{
+                      message: TRAINING_CTA.consultationMessage,
+                    }}
                     eyebrow="Get in touch"
                     label="Book a call"
                   />
@@ -241,7 +243,9 @@ export default function TrainingPage() {
                   <SectionEyebrow>Know your trainer</SectionEyebrow>
                   <h2 className="mt-2 hidden font-serif text-2xl text-white uppercase sm:text-3xl lg:block xl:text-4xl">
                     {TRAINER.name}{" "}
-                    <span className="text-accent italic">{TRAINER.surname}</span>
+                    <span className="text-accent italic">
+                      {TRAINER.surname}
+                    </span>
                   </h2>
                   <p className="mt-1 hidden text-[11px] tracking-[0.14em] text-white/55 uppercase lg:block">
                     {TRAINER.role}
