@@ -1,16 +1,12 @@
 import { useState } from "react";
+import { getTrainingIntroVideoEmbedUrl } from "../utils/trainingVideo";
 
-const GOOGLE_DRIVE_EMBED = "https://drive.google.com/file/d";
+const posterImageClass =
+  "absolute inset-0 h-full w-full object-cover object-[center_22%]";
 
 function getDirectVideoUrl() {
   const url = import.meta.env.VITE_TRAINING_VIDEO_URL?.trim();
   return url || null;
-}
-
-export function getTrainingIntroVideoEmbedUrl(googleDriveFileId, autoplay = false) {
-  if (!googleDriveFileId) return null;
-  const base = `${GOOGLE_DRIVE_EMBED}/${googleDriveFileId}/preview`;
-  return autoplay ? `${base}?autoplay=1` : base;
 }
 
 function PlayOverlay({ onPlay, label = "Watch intro" }) {
@@ -47,7 +43,7 @@ function DriveStreamPlayer({ googleDriveFileId, poster }) {
           src={poster}
           alt=""
           aria-hidden
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+          className={`${posterImageClass} transition-opacity duration-500 ${
             playing ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -57,14 +53,17 @@ function DriveStreamPlayer({ googleDriveFileId, poster }) {
         <PlayOverlay onPlay={() => setPlaying(true)} />
       ) : (
         embedUrl && (
-          <iframe
-            src={embedUrl}
-            title="Training introduction video"
-            className="absolute inset-0 z-10 h-full w-full border-0"
-            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <div className="absolute inset-0 z-10 overflow-hidden">
+            <iframe
+              src={embedUrl}
+              title="Training introduction video"
+              className="absolute -top-3 -right-3 h-[calc(100%+14px)] w-[calc(100%+14px)] max-w-none border-0"
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowFullScreen
+              sandbox="allow-scripts allow-same-origin allow-presentation"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         )
       )}
     </div>
@@ -81,7 +80,7 @@ function NativeVideoPlayer({ src, poster }) {
           src={poster}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
+          className={posterImageClass}
         />
       )}
 

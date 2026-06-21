@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Settings01Icon, UserGroupIcon } from "@hugeicons/core-free-icons";
@@ -92,7 +93,48 @@ function BlueprintCtaLink({ to, state, eyebrow, label, arrow = "→" }) {
   );
 }
 
+function ScrollContinueHint({ targetRef }) {
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        targetRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        })
+      }
+      className="group mx-auto mt-6 hidden cursor-pointer items-center gap-3 border-0 bg-transparent p-0 lg:mt-auto lg:flex"
+      aria-label="Scroll to continue"
+    >
+      <span className="text-[10px] tracking-[0.3em] text-white/30 uppercase transition-colors duration-300 group-hover:text-white/45">
+        Scroll to continue
+      </span>
+      <motion.span
+        aria-hidden
+        animate={{ y: [0, 3, 0] }}
+        transition={{
+          duration: 2.4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="relative flex h-7 w-7 shrink-0 items-center justify-center border border-white/15 transition-colors duration-300 group-hover:border-white/25"
+      >
+        <span
+          className="absolute top-0 left-0 h-1.5 w-1.5 border-t border-l border-white/25 transition-colors group-hover:border-white/40"
+          aria-hidden
+        />
+        <span
+          className="absolute right-0 bottom-0 h-1.5 w-1.5 border-r border-b border-white/25 transition-colors group-hover:border-white/40"
+          aria-hidden
+        />
+        <span className="relative text-sm leading-none text-accent">↓</span>
+      </motion.span>
+    </button>
+  );
+}
+
 export default function TrainingPage() {
+  const section2Ref = useRef(null);
   return (
     <PageShell
       className="bg-black"
@@ -102,8 +144,8 @@ export default function TrainingPage() {
       <BackgroundImage
         src={TRAINING_BACKGROUND}
         alt=""
-        overlayClass="bg-black/30 backdrop-blur-[1px]"
-        imageClass=""
+        overlayClass="bg-black/35 backdrop-blur-md"
+        imageClass="scale-105 blur-sm"
         fixed
         priority
         width={867}
@@ -122,43 +164,35 @@ export default function TrainingPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.08 }}
-            className="flex w-full flex-col lg:flex-1 lg:justify-center lg:py-6"
+            className="flex w-full flex-col gap-3 sm:gap-4 lg:flex-1 lg:justify-center lg:gap-5 lg:py-6"
           >
+            <motion.div variants={item} className="mb-1 sm:mb-2">
+              <SectionEyebrow>Training introduction</SectionEyebrow>
+              <h2 className="mt-2 font-serif text-[1.65rem] leading-tight uppercase italic sm:text-3xl xl:text-4xl">
+                <span className="text-white">{TRAINING_INTRO.titleMain} </span>
+                <span className="text-accent">
+                  {TRAINING_INTRO.titleAccent}
+                </span>
+              </h2>
+              <AccentRule />
+              <div className="mt-4 grid gap-2.5 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5">
+                {TRAINING_INTRO.paragraphs.map((text) => (
+                  <p
+                    key={text.slice(0, 24)}
+                    className="text-[0.9rem] leading-relaxed text-white/80 sm:text-sm"
+                  >
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+
             <div
-              className={`grid w-full grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-12 lg:items-stretch lg:gap-5 xl:gap-6 ${cardHeight}`}
+              className={`grid w-full grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-5 xl:gap-6 ${cardHeight}`}
             >
               <motion.div
                 variants={item}
-                className={`${panelClass} order-2 flex flex-col justify-center p-5 sm:p-6 lg:order-0 lg:col-span-3 lg:p-7`}
-              >
-                <BlueprintCorners />
-                <SectionEyebrow>Training introduction</SectionEyebrow>
-                <h2 className="mt-2 font-serif text-[1.65rem] leading-tight uppercase italic sm:text-3xl xl:text-4xl">
-                  <span className="text-white">
-                    {TRAINING_INTRO.titleMain}{" "}
-                  </span>
-                  <span className="text-accent">
-                    {TRAINING_INTRO.titleAccent}
-                  </span>
-                </h2>
-                <AccentRule />
-                <div className="mt-4 space-y-2.5 sm:mt-5 sm:space-y-3">
-                  {TRAINING_INTRO.paragraphs.map((text, index) => (
-                    <p
-                      key={text.slice(0, 24)}
-                      className={`text-[0.9rem] leading-relaxed text-white/80 sm:text-sm ${
-                        index === 2 ? "hidden xl:block" : ""
-                      }`}
-                    >
-                      {text}
-                    </p>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={item}
-                className={`${panelClass} relative order-1 aspect-video w-full overflow-hidden sm:aspect-[16/10] lg:order-0 lg:col-span-6 lg:aspect-auto lg:h-full lg:min-h-0`}
+                className={`${panelClass} relative aspect-video w-full overflow-hidden sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-0`}
               >
                 <BlueprintCorners />
                 <TrainingIntroVideo
@@ -169,7 +203,7 @@ export default function TrainingPage() {
 
               <motion.div
                 variants={item}
-                className={`${panelClass} order-3 flex flex-col justify-center p-5 sm:p-6 lg:order-0 lg:col-span-3 lg:p-7`}
+                className={`${panelClass} flex flex-col justify-center p-5 sm:p-6 lg:p-7`}
               >
                 <BlueprintCorners />
                 <h3 className="font-serif text-xl text-white uppercase italic sm:text-2xl">
@@ -194,13 +228,14 @@ export default function TrainingPage() {
             </div>
           </motion.div>
 
-          <p className="mx-auto mt-6 hidden text-center text-[10px] tracking-[0.3em] text-white/30 uppercase lg:mt-auto lg:block">
-            Scroll to continue ↓
-          </p>
+          <ScrollContinueHint targetRef={section2Ref} />
         </section>
 
         {/* Section 2 */}
-        <section className="w-full pb-0 pt-[5.5rem] sm:pt-28 lg:flex lg:min-h-dvh lg:snap-start lg:snap-always lg:flex-col">
+        <section
+          ref={section2Ref}
+          className="w-full pb-0 pt-[5.5rem] sm:pt-28 lg:flex lg:min-h-dvh lg:snap-start lg:snap-always lg:flex-col"
+        >
           <div
             className={`w-full pb-4 lg:flex lg:min-h-0 lg:flex-1 lg:items-center ${pageX} lg:pb-5`}
           >

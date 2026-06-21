@@ -69,7 +69,9 @@ export default function InteractiveGrid({ excludeRefs = [] }) {
   const excludeRefsRef = useRef(excludeRefs);
   const [crosshair, setCrosshair] = useState(null);
 
-  excludeRefsRef.current = excludeRefs;
+  useEffect(() => {
+    excludeRefsRef.current = excludeRefs;
+  }, [excludeRefs]);
 
   const updateCrosshair = useCallback((clientX, clientY, target) => {
     const container = containerRef.current;
